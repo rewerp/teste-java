@@ -15,7 +15,7 @@ public class ClienteTeste {
         Cliente c = clienteDAO.buscarPorId(1);
         System.out.println(c);
 
-        clienteDAO.listarTodos().forEach(System.out::println);
+        clienteDAO.buscarTodos().forEach(System.out::println);
     }
 	
 }

@@ -41,7 +41,7 @@ public class ClienteDAO {
         return null;
     }
 
-    public List<Cliente> listarTodos() {
+    public List<Cliente> buscarTodos() {
         String sql = "SELECT * FROM clientes";
         List<Cliente> clientes = new ArrayList<>();
         try (Connection connection = DatabaseConnection.getConnection();
@@ -73,12 +73,12 @@ public class ClienteDAO {
         }
     }
 
-    public void excluir(int id) {
+    public void excluir(int codigo) {
         String sql = "DELETE FROM clientes WHERE codigo = ?";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-        	statement.setInt(1, id);
+        	statement.setInt(1, codigo);
         	statement.executeUpdate();
 
         } catch (SQLException e) {

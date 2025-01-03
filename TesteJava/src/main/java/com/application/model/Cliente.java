@@ -8,6 +8,13 @@ public class Cliente {
 
     public Cliente() {
     }
+    
+    public Cliente(String nome, double limiteCompra, int diaFechamentoFatura) {
+        this.codigo = 0;
+        this.nome = nome;
+        this.limiteCompra = limiteCompra;
+        this.diaFechamentoFatura = diaFechamentoFatura;
+    }
 
     public Cliente(int codigo, String nome, double limiteCompra, int diaFechamentoFatura) {
         this.codigo = codigo;
