@@ -1,9 +1,9 @@
 package com.application.controller;
 
+import java.util.List;
+
 import com.application.model.Cliente;
 import com.application.dao.ClienteDAO;
-
-import java.util.List;
 
 public class ClienteController {
 
@@ -33,6 +33,13 @@ public class ClienteController {
 
 		ClienteDAO clienteDAO = new ClienteDAO();
 		clienteDAO.salvar(_cliente);
+	}
+	
+	public void atualizar() {
+		validarCliente();
+
+		ClienteDAO clienteDAO = new ClienteDAO();
+		clienteDAO.atualizar(_cliente);
 	}
 	
 	public void excluir(int codigo) {

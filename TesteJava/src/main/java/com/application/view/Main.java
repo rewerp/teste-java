@@ -1,37 +1,32 @@
 package com.application.view;
 
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.FlowLayout;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
+
+import com.application.view.cliente.ConsultaCliente;
+import com.application.view.produto.ConsultaProduto;
 
 public class Main extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JMenuBar menuBar;
-	private JMenu mnCadastro;
-	private JMenuItem mnCadastroCliente;
-	private JMenuItem mnCadastroProduto;
-	private JMenuItem mnCadastroVenda;
-	private JMenu mnConsulta;
+	private JMenu mnMenu;
 	private JMenuItem mnConsultaCliente;
 	private JMenuItem mnConsultaProduto;
 	private JMenuItem mnConsultaVenda;
 	
-	private CadastroCliente clienteCadastro;
-	private ConsultaCliente consultaCadastro;
+	private ConsultaCliente consultaCliente;
+	private ConsultaProduto consultaProduto;
 
 	/**
 	 * Launch the application.
@@ -67,57 +62,36 @@ public class Main extends JFrame {
 		menuBar = new JMenuBar();
 		contentPane.add(menuBar);
 		
-		mnCadastro = new JMenu("Cadastros");
-		menuBar.add(mnCadastro);
-		
-		mnCadastroCliente = new JMenuItem("> Clientes");
-		mnCadastroCliente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-	            if (clienteCadastro == null || !clienteCadastro.isDisplayable()) {
-	            	clienteCadastro = new CadastroCliente(Main.this);
-	                clienteCadastro.setVisible(true);
-	            } else {
-	                clienteCadastro.toFront();
-	            }				
-			}
-		});
-		mnCadastro.add(mnCadastroCliente);
-		
-		mnCadastroProduto = new JMenuItem("> Produtos");
-		mnCadastro.add(mnCadastroProduto);
-		
-		mnCadastroVenda = new JMenuItem("> Vendas");
-		mnCadastro.add(mnCadastroVenda);
-		
-		mnConsulta = new JMenu("Consultas");
-		menuBar.add(mnConsulta);
+		mnMenu = new JMenu("Menu");
+		menuBar.add(mnMenu);
 		
 		mnConsultaCliente = new JMenuItem("> Clientes");
 		mnConsultaCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (consultaCadastro == null || !consultaCadastro.isDisplayable()) {
-					consultaCadastro = new ConsultaCliente(Main.this);
-					consultaCadastro.setVisible(true);
+				if (consultaCliente == null || !consultaCliente.isDisplayable()) {
+					consultaCliente = new ConsultaCliente(Main.this);
+					consultaCliente.setVisible(true);
 	            } else {
-	            	consultaCadastro.toFront();
+	            	consultaCliente.toFront();
 	            }
 			}
 		});
-		mnConsulta.add(mnConsultaCliente);
+		mnMenu.add(mnConsultaCliente);
 		
 		mnConsultaProduto = new JMenuItem("> Produtos");
-		mnConsulta.add(mnConsultaProduto);
+		mnConsultaProduto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (consultaProduto == null || !consultaProduto.isDisplayable()) {
+					consultaProduto = new ConsultaProduto();
+					consultaProduto.setVisible(true);
+	            } else {
+	            	consultaProduto.toFront();
+	            }
+			}
+		});
+		mnMenu.add(mnConsultaProduto);
 		
 		mnConsultaVenda = new JMenuItem("> Vendas");
-		mnConsulta.add(mnConsultaVenda);
-	}
-
-	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "SwingAction");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-		}
+		mnMenu.add(mnConsultaVenda);
 	}
 }

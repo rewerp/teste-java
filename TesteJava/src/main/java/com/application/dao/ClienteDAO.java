@@ -1,11 +1,11 @@
 package com.application.dao;
 
-import com.application.database.DatabaseConnection;
-import com.application.model.Cliente;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.application.database.DatabaseConnection;
+import com.application.model.Cliente;
 
 public class ClienteDAO {
 
@@ -20,7 +20,7 @@ public class ClienteDAO {
         	statement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao salvar o cliente", e);
+            throw new RuntimeException("Erro ao salvar o cliente!", e);
         }
     }
 
@@ -36,13 +36,13 @@ public class ClienteDAO {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao buscar o cliente por CODIGO", e);
+            throw new RuntimeException("Erro ao buscar o cliente por CODIGO!", e);
         }
         return null;
     }
 
     public List<Cliente> buscarTodos() {
-        String sql = "SELECT * FROM clientes";
+        String sql = "SELECT * FROM clientes ORDER BY codigo";
         List<Cliente> clientes = new ArrayList<>();
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
@@ -52,7 +52,7 @@ public class ClienteDAO {
                 clientes.add(mapearCliente(resultSet));
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao listar todos os clientes", e);
+            throw new RuntimeException("Erro ao listar todos os clientes!", e);
         }
         return clientes;
     }
@@ -69,7 +69,7 @@ public class ClienteDAO {
         	statement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao atualizar o cliente", e);
+            throw new RuntimeException("Erro ao atualizar o cliente!", e);
         }
     }
 
@@ -82,7 +82,7 @@ public class ClienteDAO {
         	statement.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao excluir o cliente", e);
+            throw new RuntimeException("Erro ao excluir o cliente!", e);
         }
     }
 

@@ -1,26 +1,25 @@
-package com.application.view;
+package com.application.view.cliente;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
-import com.application.controller.ClienteController;
-import com.application.model.Cliente;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.util.List;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+
+import com.application.controller.ClienteController;
+import com.application.enums.ModoOperacao;
+import com.application.model.Cliente;
 
 public class ConsultaCliente extends JFrame {
 
@@ -80,7 +79,7 @@ public class ConsultaCliente extends JFrame {
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (clienteCadastro == null || !clienteCadastro.isDisplayable()) {
-					clienteCadastro = new CadastroCliente(ConsultaCliente.this);
+					clienteCadastro = new CadastroCliente(ConsultaCliente.this, ModoOperacao.ADICIONAR);
 
 					clienteCadastro.setCadastroClienteListener(new ICadastroClienteListener() {
 						@Override
@@ -100,8 +99,22 @@ public class ConsultaCliente extends JFrame {
 		JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int selectedRow = tabelaClientes.getSelectedRow();
+
+				if (selectedRow == -1) {
+					JOptionPane.showMessageDialog(ConsultaCliente.this, "Nenhum cliente selecionado para atualização!", "Aviso", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				
+				int codigo = (int)tabelaClientes.getValueAt(selectedRow, 0);
+				String nome = (String)tabelaClientes.getValueAt(selectedRow, 1);
+				double limiteCompra = (double)tabelaClientes.getValueAt(selectedRow, 2);
+				int diaFechamentoFatura = (int)tabelaClientes.getValueAt(selectedRow, 3);
+				
+				Cliente clienteAtualizar = new Cliente(codigo, nome, limiteCompra, diaFechamentoFatura);
+				
 				if (clienteCadastro == null || !clienteCadastro.isDisplayable()) {
-					clienteCadastro = new CadastroCliente(ConsultaCliente.this);
+					clienteCadastro = new CadastroCliente(ConsultaCliente.this, ModoOperacao.ATUALIZAR, clienteAtualizar);
 
 					clienteCadastro.setCadastroClienteListener(new ICadastroClienteListener() {
 						@Override

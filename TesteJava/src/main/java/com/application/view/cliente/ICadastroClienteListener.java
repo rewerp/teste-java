@@ -1,4 +1,4 @@
-package com.application.view;
+package com.application.view.cliente;
 
 public interface ICadastroClienteListener {
 	void onClienteAtualizado();

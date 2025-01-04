@@ -1,28 +1,21 @@
-package com.application.view;
+package com.application.view.cliente;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import com.application.controller.ClienteController;
-import com.application.dao.ClienteDAO;
-import com.application.model.Cliente;
-
 import javax.swing.JTextField;
-import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
-import java.math.BigDecimal;
-
-import javax.swing.JTextPane;
-import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
-import javax.swing.JFormattedTextField;
 import javax.swing.JButton;
-import java.awt.event.ActionEvent;
+
+import com.application.controller.ClienteController;
+import com.application.enums.ModoOperacao;
+import com.application.model.Cliente;
 
 public class CadastroCliente extends JFrame {
 
@@ -30,13 +23,15 @@ public class CadastroCliente extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtNome;
 	private JLabel lblCodigo;
+	private JLabel lblNome;
 	private JLabel lblLimiteCompra;
 	private JLabel lblDiaFechamentoFatura;
 	private JTextField txtCodigo;
 	private JTextField txtLimiteCompra;
 	private JTextField txtDiaFechamentoFatura;
-	
-	private ICadastroClienteListener listener;
+
+	private ICadastroClienteListener _listener;
+	private Cliente _cliente;
 
 	/**
 	 * Launch the application.
@@ -45,7 +40,7 @@ public class CadastroCliente extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroCliente frame = new CadastroCliente(null);
+					CadastroCliente frame = new CadastroCliente(null, ModoOperacao.ADICIONAR);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,7 +52,25 @@ public class CadastroCliente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CadastroCliente(JFrame parentFrame) {
+	public CadastroCliente() {
+	};
+	
+	public CadastroCliente(JFrame parentFrame, ModoOperacao modo) {
+		CreateFrame(parentFrame, modo);
+	}
+
+	public CadastroCliente(JFrame parentFrame, ModoOperacao modo, Cliente cliente) {
+		CreateFrame(parentFrame, modo);
+
+		_cliente = cliente;
+
+		txtCodigo.setText(String.valueOf(cliente.getCodigo()));
+		txtNome.setText(cliente.getNome());
+		txtLimiteCompra.setText(String.valueOf(cliente.getLimiteCompra()));
+		txtDiaFechamentoFatura.setText(String.valueOf(cliente.getDiaFechamentoFatura()));
+	}
+
+	public void CreateFrame(JFrame parentFrame, ModoOperacao modo) {
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setTitle("Cadastro Cliente");
@@ -76,7 +89,7 @@ public class CadastroCliente extends JFrame {
 		contentPane.add(txtNome);
 		txtNome.setColumns(10);
 
-		JLabel lblNome = new JLabel("Nome");
+		lblNome = new JLabel("Nome");
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNome.setBounds(125, 49, 64, 14);
 		contentPane.add(lblNome);
@@ -116,22 +129,16 @@ public class CadastroCliente extends JFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					String nome = txtNome.getText();
-					double limiteCompra = Double.parseDouble(txtLimiteCompra.getText());
-					int diaFechamentoFatura = Integer.parseInt(txtDiaFechamentoFatura.getText());
+					if (modo == ModoOperacao.ADICIONAR) {
+						salvar();
+					} else if (modo == ModoOperacao.ATUALIZAR) {
+						atualizar();
+					}
 
-					ClienteController clienteController = new ClienteController(new Cliente(nome, limiteCompra, diaFechamentoFatura));
-					clienteController.salvar();
-
-					JOptionPane.showMessageDialog(CadastroCliente.this, "Cliente salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+					if (_listener != null) {
+						_listener.onClienteAtualizado();
+					}
 					
-					txtNome.setText("");
-					txtLimiteCompra.setText("");
-					txtDiaFechamentoFatura.setText("");
-					
-					if (listener != null) {
-			            listener.onClienteAtualizado();
-			        }
 					dispose();
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -142,8 +149,30 @@ public class CadastroCliente extends JFrame {
 		btnSalvar.setBounds(417, 139, 89, 23);
 		contentPane.add(btnSalvar);
 	}
-	
+
+	private void salvar() {
+		String nome = txtNome.getText();
+		double limiteCompra = Double.parseDouble(txtLimiteCompra.getText());
+		int diaFechamentoFatura = Integer.parseInt(txtDiaFechamentoFatura.getText());
+
+		ClienteController clienteController = new ClienteController(new Cliente(nome, limiteCompra, diaFechamentoFatura));
+		clienteController.salvar();
+
+		JOptionPane.showMessageDialog(CadastroCliente.this, "Cliente salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	private void atualizar() {
+		_cliente.setNome(txtNome.getText());
+		_cliente.setLimiteCompra(Double.parseDouble(txtLimiteCompra.getText()));
+		_cliente.setDiaFechamentoFatura(Integer.parseInt(txtDiaFechamentoFatura.getText()));
+
+		ClienteController clienteController = new ClienteController(_cliente);
+		clienteController.atualizar();
+
+		JOptionPane.showMessageDialog(CadastroCliente.this, "Cliente atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+	}
+
 	public void setCadastroClienteListener(ICadastroClienteListener listener) {
-	    this.listener = listener;
+		this._listener = listener;
 	}
 }
