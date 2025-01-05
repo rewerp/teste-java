@@ -1,21 +1,30 @@
 package com.application.view.venda;
 
 import java.awt.EventQueue;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.BorderLayout;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
-import java.awt.FlowLayout;
+
+import java.util.List;
+
+import com.application.controller.VendaController;
+import com.application.model.Venda;
 
 public class ConsultaVenda extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable table;
+	private JTable tabelaVendas;
+	
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 	/**
 	 * Launch the application.
@@ -72,8 +81,25 @@ public class ConsultaVenda extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 		
-		table = new JTable();
-		scrollPane.setViewportView(table);
+		tabelaVendas = new JTable();
+		scrollPane.setViewportView(tabelaVendas);
+		String[] colunas = { "Código", "Código Cliente", "Nome Cliente", "Data Venda", "Valor Total (R$)" };
+		DefaultTableModel model = new DefaultTableModel(null, colunas);
+		tabelaVendas.setModel(model);
+		
+		carregarVendas();
+	}
+	
+	private void carregarVendas() {
+		VendaController vendaController = new VendaController();
+		List<Venda> vendas = vendaController.buscarTodos();
+		
+		DefaultTableModel model = (DefaultTableModel) tabelaVendas.getModel();
+		model.setRowCount(0);
+
+		for (Venda venda : vendas) {
+			model.addRow(new Object[] { venda.getCodigo(), venda.getCliente().getCodigo(), venda.getCliente().getNome(), venda.getDataVenda().format(formatter), venda.getValorTotal() });
+		}
 	}
 
 }
