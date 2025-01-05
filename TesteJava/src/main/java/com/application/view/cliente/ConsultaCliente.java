@@ -53,7 +53,7 @@ public class ConsultaCliente extends JFrame {
 		setAlwaysOnTop(true);
 		setTitle("Consulta Clientes");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 871, 561);
+		setBounds(100, 100, 900, 600);
 		setLocationRelativeTo(parentFrame);
 
 		contentPane = new JPanel();
@@ -74,6 +74,33 @@ public class ConsultaCliente extends JFrame {
 		JPanel panelBottom = new JPanel();
 		contentPane.add(panelBottom, BorderLayout.SOUTH);
 		panelBottom.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JButton btnVisualizar = new JButton("Visualizar");
+		btnVisualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int selectedRow = tabelaClientes.getSelectedRow();
+
+				if (selectedRow == -1) {
+					JOptionPane.showMessageDialog(ConsultaCliente.this, "Nenhum cliente selecionado para visualização!", "Aviso", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				
+				int codigo = (int)tabelaClientes.getValueAt(selectedRow, 0);
+				String nome = (String)tabelaClientes.getValueAt(selectedRow, 1);
+				double limiteCompra = (double)tabelaClientes.getValueAt(selectedRow, 2);
+				int diaFechamentoFatura = (int)tabelaClientes.getValueAt(selectedRow, 3);
+				
+				Cliente clienteAtualizar = new Cliente(codigo, nome, limiteCompra, diaFechamentoFatura);
+				
+				if (clienteCadastro == null || !clienteCadastro.isDisplayable()) {
+					clienteCadastro = new CadastroCliente(ConsultaCliente.this, ModoOperacao.VISUALIZAR, clienteAtualizar);
+					clienteCadastro.setVisible(true);
+				} else {
+					clienteCadastro.toFront();
+				}
+			}
+		});
+		panelBottom.add(btnVisualizar);
 
 		JButton btnAdicionar = new JButton("Adicionar");
 		btnAdicionar.addActionListener(new ActionListener() {
@@ -95,7 +122,7 @@ public class ConsultaCliente extends JFrame {
 			}
 		});
 		panelBottom.add(btnAdicionar);
-
+		
 		JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

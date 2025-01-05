@@ -3,6 +3,7 @@ package com.application.view.produto;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.EnumSet;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -83,6 +84,7 @@ public class CadastroProduto extends JFrame {
 
 		txtDescricao = new JTextField();
 		txtDescricao.setBounds(199, 46, 307, 20);
+		txtDescricao.setEditable(EnumSet.of(ModoOperacao.ADICIONAR, ModoOperacao.ATUALIZAR).contains(modo));
 		contentPane.add(txtDescricao);
 		txtDescricao.setColumns(10);
 
@@ -102,17 +104,19 @@ public class CadastroProduto extends JFrame {
 		contentPane.add(lblPrecoUnitario);
 
 		txtCodigo = new JTextField();
-		txtCodigo.setEnabled(false);
+		txtCodigo.setEditable(false);
 		txtCodigo.setBounds(199, 21, 86, 20);
 		contentPane.add(txtCodigo);
 		txtCodigo.setColumns(10);
 
 		txtPrecoUnitario = new JTextField();
 		txtPrecoUnitario.setBounds(199, 71, 86, 20);
+		txtPrecoUnitario.setEditable(EnumSet.of(ModoOperacao.ADICIONAR, ModoOperacao.ATUALIZAR).contains(modo));
 		contentPane.add(txtPrecoUnitario);
 		txtPrecoUnitario.setColumns(10);
 
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.setVisible(EnumSet.of(ModoOperacao.ADICIONAR, ModoOperacao.ATUALIZAR).contains(modo));
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {

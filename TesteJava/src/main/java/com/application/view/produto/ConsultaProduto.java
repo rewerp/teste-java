@@ -52,7 +52,7 @@ public class ConsultaProduto extends JFrame {
 	public ConsultaProduto() {
 		setTitle("Consulta Produtos");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 869, 563);
+		setBounds(100, 100, 900, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -69,6 +69,32 @@ public class ConsultaProduto extends JFrame {
 		
 		JPanel panelBottom = new JPanel();
 		contentPane.add(panelBottom, BorderLayout.SOUTH);
+		
+		JButton btnVisualizar = new JButton("Visualizar");
+		btnVisualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int selectedRow = tabelaProdutos.getSelectedRow();
+
+				if (selectedRow == -1) {
+					JOptionPane.showMessageDialog(ConsultaProduto.this, "Nenhum produto selecionado para visualização!", "Aviso", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				
+				int codigo = (int)tabelaProdutos.getValueAt(selectedRow, 0);
+				String descricao = (String)tabelaProdutos.getValueAt(selectedRow, 1);
+				double precoUnitario = (double)tabelaProdutos.getValueAt(selectedRow, 2);
+				
+				Produto produtoAtualizar = new Produto(codigo, descricao, precoUnitario);
+				
+				if (produtoCadastro == null || !produtoCadastro.isDisplayable()) {
+					produtoCadastro = new CadastroProduto(ConsultaProduto.this, ModoOperacao.VISUALIZAR, produtoAtualizar);
+					produtoCadastro.setVisible(true);
+				} else {
+					produtoCadastro.toFront();
+				}
+			}
+		});
+		panelBottom.add(btnVisualizar);
 		
 		JButton btnAdicionar = new JButton("Adicionar");
 		btnAdicionar.addActionListener(new ActionListener() {

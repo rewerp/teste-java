@@ -1,7 +1,9 @@
+package com.application.teste;
+
 import com.application.dao.ClienteDAO;
 import com.application.model.Cliente;
 
-public class ClienteTeste {
+public class ClienteAdicionarTeste {
 
     public static void main(String[] args) {
         ClienteDAO clienteDAO = new ClienteDAO();

@@ -55,7 +55,19 @@ public class VendaItem {
 
 	@Override
 	public String toString() {
-		return "VendaItem [produto=" + produto + ", quantidade=" + quantidade + ", valorTotal=" + valorTotal + "]";
+		return "VendaItem={ " + 
+				"produto=" + produto + 
+				", quantidade=" + quantidade + 
+				", valorTotal=" + valorTotal + 
+				" }";
+	}
+	
+	public String toJSON() {
+	    return "{" +
+	           "\"produto\": " + (produto != null ? produto.toJSON() : "null") + "," +
+	           "\"quantidade\": " + quantidade + "," +
+	           "\"valorTotal\": " + valorTotal +
+	           "}";
 	}
 	
 }

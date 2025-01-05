@@ -11,8 +11,9 @@ public class ProdutoDAO {
 
     public void salvar(Produto produto) {
         String sql = "INSERT INTO produtos (descricao, preco_unitario) VALUES (?, ?);";
+        
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+            PreparedStatement statement = connection.prepareStatement(sql)) {
 
         	statement.setString(1, produto.getDescricao());
         	statement.setDouble(2, produto.getPrecoUnitario());
@@ -25,10 +26,12 @@ public class ProdutoDAO {
 
     public Produto buscarPorId(int codigo) {
         String sql = "SELECT * FROM produtos WHERE codigo = ?";
+        
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+            PreparedStatement statement = connection.prepareStatement(sql)) {
 
         	statement.setInt(1, codigo);
+        	
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     return mapearProduto(resultSet);
@@ -37,29 +40,33 @@ public class ProdutoDAO {
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao buscar o produto por CODIGO!", e);
         }
+        
         return null;
     }
 
     public List<Produto> buscarTodos() {
         String sql = "SELECT * FROM produtos ORDER BY codigo";
         List<Produto> produtos = new ArrayList<>();
+        
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
             	produtos.add(mapearProduto(resultSet));
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao listar todos os produtos!", e);
+            throw new RuntimeException("Erro ao buscar todos os produtos!", e);
         }
+        
         return produtos;
     }
 
     public void atualizar(Produto produto) {
         String sql = "UPDATE produtos SET descricao = ?, preco_unitario = ? WHERE codigo = ?";
+        
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+            PreparedStatement statement = connection.prepareStatement(sql)) {
 
         	statement.setString(1, produto.getDescricao());
         	statement.setDouble(2, produto.getPrecoUnitario());
@@ -73,8 +80,9 @@ public class ProdutoDAO {
 
     public void excluir(int codigo) {
         String sql = "DELETE FROM produtos WHERE codigo = ?";
+        
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+            PreparedStatement statement = connection.prepareStatement(sql)) {
 
         	statement.setInt(1, codigo);
         	statement.executeUpdate();
@@ -89,6 +97,7 @@ public class ProdutoDAO {
         produto.setCodigo(resultSet.getInt("codigo"));
         produto.setDescricao(resultSet.getString("descricao"));
         produto.setPrecoUnitario(resultSet.getDouble("preco_unitario"));
+        
         return produto;
     }
 	

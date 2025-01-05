@@ -57,8 +57,6 @@ public class Cliente {
         this.diaFechamentoFatura = diaFechamentoFatura;
     }
     
-    
-
     @Override
 	public int hashCode() {
 		return Objects.hash(codigo, diaFechamentoFatura, limiteCompra, nome);
@@ -80,11 +78,20 @@ public class Cliente {
 
 	@Override
     public String toString() {
-        return "Cliente{" +
+        return "Cliente={ " +
                 "codigo=" + codigo +
                 ", nome='" + nome + '\'' +
                 ", limiteCompra=" + limiteCompra +
                 ", diaFechamentoFatura=" + diaFechamentoFatura +
-                '}';
+                " }";
     }
+	
+	public String toJSON() {
+	    return "{" +
+	           "\"codigo\": " + codigo + "," +
+	           "\"nome\": \"" + nome + "\"," +
+	           "\"limiteCompra\": " + limiteCompra + "," +
+	           "\"diaFechamentoFatura\": " + diaFechamentoFatura +
+	           "}";
+	}
 }

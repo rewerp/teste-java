@@ -2,6 +2,7 @@ package com.application.view.cliente;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
+import java.util.EnumSet;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
@@ -86,6 +87,7 @@ public class CadastroCliente extends JFrame {
 
 		txtNome = new JTextField();
 		txtNome.setBounds(199, 46, 307, 20);
+		txtNome.setEditable(EnumSet.of(ModoOperacao.ADICIONAR, ModoOperacao.ATUALIZAR).contains(modo));
 		contentPane.add(txtNome);
 		txtNome.setColumns(10);
 
@@ -110,22 +112,25 @@ public class CadastroCliente extends JFrame {
 		contentPane.add(lblDiaFechamentoFatura);
 
 		txtCodigo = new JTextField();
-		txtCodigo.setEnabled(false);
+		txtCodigo.setEditable(false);
 		txtCodigo.setBounds(199, 21, 86, 20);
 		contentPane.add(txtCodigo);
 		txtCodigo.setColumns(10);
 
 		txtLimiteCompra = new JTextField();
 		txtLimiteCompra.setBounds(199, 71, 86, 20);
+		txtLimiteCompra.setEditable(EnumSet.of(ModoOperacao.ADICIONAR, ModoOperacao.ATUALIZAR).contains(modo));
 		contentPane.add(txtLimiteCompra);
 		txtLimiteCompra.setColumns(10);
 
 		txtDiaFechamentoFatura = new JTextField();
 		txtDiaFechamentoFatura.setBounds(199, 96, 86, 20);
+		txtDiaFechamentoFatura.setEditable(EnumSet.of(ModoOperacao.ADICIONAR, ModoOperacao.ATUALIZAR).contains(modo));
 		contentPane.add(txtDiaFechamentoFatura);
 		txtDiaFechamentoFatura.setColumns(10);
 
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.setVisible(EnumSet.of(ModoOperacao.ADICIONAR, ModoOperacao.ATUALIZAR).contains(modo));
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {

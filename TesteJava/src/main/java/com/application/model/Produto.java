@@ -66,7 +66,18 @@ public class Produto {
 
 	@Override
 	public String toString() {
-		return "Produto [codigo=" + codigo + ", descricao=" + descricao + ", precoUnitario=" + precoUnitario + "]";
+		return "Produto={ " + 
+				"codigo=" + codigo + 
+				", descricao=" + descricao + 
+				", precoUnitario=" + precoUnitario + " }";
+	}
+	
+	public String toJSON() {
+	    return "{" +
+	           "\"codigo\": " + codigo + "," +
+	           "\"descricao\": \"" + descricao + "\"," +
+	           "\"precoUnitario\": " + precoUnitario +
+	           "}";
 	}
 
 }

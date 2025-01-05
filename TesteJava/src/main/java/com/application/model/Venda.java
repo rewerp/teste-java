@@ -76,8 +76,25 @@ public class Venda {
 
 	@Override
 	public String toString() {
-		return "Venda [codigo=" + codigo + ", cliente=" + cliente + ", dataVenda=" + dataVenda + ", vendaItens="
-				+ vendaItens + ", valorTotal=" + valorTotal + "]";
+		return "Venda={ " + 
+				"codigo=" + codigo + 
+				", cliente=" + cliente + 
+				", dataVenda=" + dataVenda + 
+				", vendaItens=" + vendaItens + 
+				", valorTotal=" + valorTotal + 
+				" }";
+	}
+	
+	public String toJSON() {
+	    return "{" +
+	           "\"codigo\": " + codigo + "," +
+	           "\"cliente\": " + (cliente != null ? cliente.toJSON() : "null") + "," +
+	           "\"dataVenda\": \"" + dataVenda + "\"," +
+	           "\"vendaItens\": " + vendaItens.stream()
+	                                         .map(VendaItem::toJSON)
+	                                         .toList() + "," +
+	           "\"valorTotal\": " + valorTotal +
+	           "}";
 	}
 	
 }
