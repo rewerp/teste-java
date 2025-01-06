@@ -14,7 +14,7 @@ public class ClienteAdicionarTeste {
         cliente.setDiaFechamentoFatura(15);
         clienteDAO.salvar(cliente);
 
-        Cliente c = clienteDAO.buscarPorId(1);
+        Cliente c = clienteDAO.buscarPorCodigo(1);
         System.out.println(c);
 
         clienteDAO.buscarTodos().forEach(System.out::println);

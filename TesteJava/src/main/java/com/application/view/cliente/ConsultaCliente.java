@@ -49,8 +49,10 @@ public class ConsultaCliente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	public ConsultaCliente() {
+	}
+	
 	public ConsultaCliente(JFrame parentFrame) {
-		setAlwaysOnTop(true);
 		setTitle("Consulta Clientes");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
@@ -90,10 +92,10 @@ public class ConsultaCliente extends JFrame {
 				double limiteCompra = (double)tabelaClientes.getValueAt(selectedRow, 2);
 				int diaFechamentoFatura = (int)tabelaClientes.getValueAt(selectedRow, 3);
 				
-				Cliente clienteAtualizar = new Cliente(codigo, nome, limiteCompra, diaFechamentoFatura);
+				Cliente clienteVisualizar = new Cliente(codigo, nome, limiteCompra, diaFechamentoFatura);
 				
 				if (clienteCadastro == null || !clienteCadastro.isDisplayable()) {
-					clienteCadastro = new CadastroCliente(ConsultaCliente.this, ModoOperacao.VISUALIZAR, clienteAtualizar);
+					clienteCadastro = new CadastroCliente(ConsultaCliente.this, ModoOperacao.VISUALIZAR, clienteVisualizar);
 					clienteCadastro.setVisible(true);
 				} else {
 					clienteCadastro.toFront();

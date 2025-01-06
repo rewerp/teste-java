@@ -19,11 +19,17 @@ public class ClienteController {
 	private void validarCliente() {
 		if (_cliente == null) {
 			throw new IllegalArgumentException("Cliente inválido!");
-		} else if (_cliente.getNome() == null || _cliente.getNome().trim().isEmpty()) {
+		} 
+		
+		if (_cliente.getNome() == null || _cliente.getNome().trim().isEmpty()) {
 			throw new IllegalArgumentException("O nome deve ser preenchido!");
-		} else if (_cliente.getLimiteCompra() <= 0) {
+		} 
+		
+		if (_cliente.getLimiteCompra() <= 0) {
 			throw new IllegalArgumentException("O limite de compra não pode ser ZERO ou negativo!");
-		} else if (_cliente.getDiaFechamentoFatura() < 1 || _cliente.getDiaFechamentoFatura() > 31) {
+		} 
+		
+		if (_cliente.getDiaFechamentoFatura() < 1 || _cliente.getDiaFechamentoFatura() > 31) {
 			throw new IllegalArgumentException("O dia de fechamento da fatura deve ser um dia do mês válido!");
 		}
 	}
@@ -50,6 +56,11 @@ public class ClienteController {
 	public List<Cliente> buscarTodos() {
 	    ClienteDAO clienteDAO = new ClienteDAO();
 	    return clienteDAO.buscarTodos();
+	}
+	
+	public Cliente buscarPorCodigo(int codigo) {
+		ClienteDAO clienteDAO = new ClienteDAO();
+	    return clienteDAO.buscarPorCodigo(codigo);
 	}
 
 }

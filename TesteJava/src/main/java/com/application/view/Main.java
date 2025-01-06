@@ -14,6 +14,7 @@ import javax.swing.JMenuItem;
 
 import com.application.view.cliente.ConsultaCliente;
 import com.application.view.produto.ConsultaProduto;
+import com.application.view.venda.ConsultaVenda;
 
 public class Main extends JFrame {
 
@@ -27,6 +28,7 @@ public class Main extends JFrame {
 	
 	private ConsultaCliente consultaCliente;
 	private ConsultaProduto consultaProduto;
+	private ConsultaVenda consultaVenda;
 
 	/**
 	 * Launch the application.
@@ -82,7 +84,7 @@ public class Main extends JFrame {
 		mnConsultaProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (consultaProduto == null || !consultaProduto.isDisplayable()) {
-					consultaProduto = new ConsultaProduto();
+					consultaProduto = new ConsultaProduto(Main.this);
 					consultaProduto.setVisible(true);
 	            } else {
 	            	consultaProduto.toFront();
@@ -92,6 +94,16 @@ public class Main extends JFrame {
 		mnMenu.add(mnConsultaProduto);
 		
 		mnConsultaVenda = new JMenuItem("> Vendas");
+		mnConsultaVenda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (consultaVenda == null || !consultaVenda.isDisplayable()) {
+					consultaVenda = new ConsultaVenda(Main.this);
+					consultaVenda.setVisible(true);
+	            } else {
+	            	consultaVenda.toFront();
+	            }
+			}
+		});
 		mnMenu.add(mnConsultaVenda);
 	}
 }

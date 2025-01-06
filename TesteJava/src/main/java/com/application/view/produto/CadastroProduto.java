@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import com.application.controller.ProdutoController;
 import com.application.enums.ModoOperacao;
 import com.application.model.Produto;
+import com.application.util.NumberUtils;
 
 public class CadastroProduto extends JFrame {
 
@@ -52,6 +53,7 @@ public class CadastroProduto extends JFrame {
 	 * Create the frame.
 	 */
 	public CadastroProduto() {
+		CreateFrame(null, null);
 	};
 	
 	public CadastroProduto(JFrame parentFrame, ModoOperacao modo) {
@@ -69,7 +71,6 @@ public class CadastroProduto extends JFrame {
 	}
 	
 	public void CreateFrame(JFrame parentFrame, ModoOperacao modo) {
-		setAlwaysOnTop(true);
 		setResizable(false);
 		setTitle("Cadastro Produto");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -143,7 +144,7 @@ public class CadastroProduto extends JFrame {
 	
 	private void salvar() {
 		String descricao = txtDescricao.getText();
-		double precoUnitario = Double.parseDouble(txtPrecoUnitario.getText());
+		double precoUnitario = NumberUtils.parseDoubleOrDefault(txtPrecoUnitario.getText(), 0);
 
 		ProdutoController produtoController = new ProdutoController(new Produto(descricao, precoUnitario));
 		produtoController.salvar();
@@ -153,7 +154,7 @@ public class CadastroProduto extends JFrame {
 
 	private void atualizar() {
 		_produto.setDescricao(txtDescricao.getText());
-		_produto.setPrecoUnitario(Double.parseDouble(txtPrecoUnitario.getText()));
+		_produto.setPrecoUnitario(NumberUtils.parseDoubleOrDefault(txtPrecoUnitario.getText(), 0));
 
 		ProdutoController produtoController = new ProdutoController(_produto);
 		produtoController.atualizar();

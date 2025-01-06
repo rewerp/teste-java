@@ -25,7 +25,7 @@ public class ClienteDAO {
         }
     }
 
-    public Cliente buscarPorId(int codigo) {
+    public Cliente buscarPorCodigo(int codigo) {
         String sql = "SELECT * FROM clientes WHERE codigo = ?";
         
         try (Connection connection = DatabaseConnection.getConnection();

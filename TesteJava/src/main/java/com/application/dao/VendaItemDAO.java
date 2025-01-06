@@ -137,7 +137,7 @@ public class VendaItemDAO {
 	
     private VendaItem mapearVendaItens(ResultSet resultSet) throws SQLException {
     	VendaItem vendaItem = new VendaItem();
-    	vendaItem.setProduto(new ProdutoDAO().buscarPorId(resultSet.getInt("codigo_produto")));
+    	vendaItem.setProduto(new ProdutoDAO().buscarPorCodigo(resultSet.getInt("codigo_produto")));
     	vendaItem.setQuantidade(resultSet.getDouble("quantidade"));
     	vendaItem.setValorTotal(resultSet.getDouble("valor_total"));
         

@@ -37,7 +37,7 @@ public class ConsultaProduto extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ConsultaProduto frame = new ConsultaProduto();
+					ConsultaProduto frame = new ConsultaProduto(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,11 +50,15 @@ public class ConsultaProduto extends JFrame {
 	 * Create the frame.
 	 */
 	public ConsultaProduto() {
+	}
+	
+	public ConsultaProduto(JFrame parentFrame) {
 		setTitle("Consulta Produtos");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLocationRelativeTo(parentFrame);
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -84,10 +88,10 @@ public class ConsultaProduto extends JFrame {
 				String descricao = (String)tabelaProdutos.getValueAt(selectedRow, 1);
 				double precoUnitario = (double)tabelaProdutos.getValueAt(selectedRow, 2);
 				
-				Produto produtoAtualizar = new Produto(codigo, descricao, precoUnitario);
+				Produto produtoVisualizar = new Produto(codigo, descricao, precoUnitario);
 				
 				if (produtoCadastro == null || !produtoCadastro.isDisplayable()) {
-					produtoCadastro = new CadastroProduto(ConsultaProduto.this, ModoOperacao.VISUALIZAR, produtoAtualizar);
+					produtoCadastro = new CadastroProduto(ConsultaProduto.this, ModoOperacao.VISUALIZAR, produtoVisualizar);
 					produtoCadastro.setVisible(true);
 				} else {
 					produtoCadastro.toFront();

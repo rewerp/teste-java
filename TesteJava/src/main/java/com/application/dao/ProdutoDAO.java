@@ -24,7 +24,7 @@ public class ProdutoDAO {
         }
     }
 
-    public Produto buscarPorId(int codigo) {
+    public Produto buscarPorCodigo(int codigo) {
         String sql = "SELECT * FROM produtos WHERE codigo = ?";
         
         try (Connection connection = DatabaseConnection.getConnection();

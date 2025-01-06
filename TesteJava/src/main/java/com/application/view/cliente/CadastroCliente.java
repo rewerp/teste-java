@@ -2,7 +2,6 @@ package com.application.view.cliente;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
-import java.util.EnumSet;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
@@ -14,9 +13,12 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
+import java.util.EnumSet;
+
 import com.application.controller.ClienteController;
 import com.application.enums.ModoOperacao;
 import com.application.model.Cliente;
+import com.application.util.NumberUtils;
 
 public class CadastroCliente extends JFrame {
 
@@ -54,6 +56,7 @@ public class CadastroCliente extends JFrame {
 	 * Create the frame.
 	 */
 	public CadastroCliente() {
+		CreateFrame(null, null);
 	};
 	
 	public CadastroCliente(JFrame parentFrame, ModoOperacao modo) {
@@ -65,14 +68,13 @@ public class CadastroCliente extends JFrame {
 
 		_cliente = cliente;
 
-		txtCodigo.setText(String.valueOf(cliente.getCodigo()));
-		txtNome.setText(cliente.getNome());
-		txtLimiteCompra.setText(String.valueOf(cliente.getLimiteCompra()));
-		txtDiaFechamentoFatura.setText(String.valueOf(cliente.getDiaFechamentoFatura()));
+		txtCodigo.setText(String.valueOf(_cliente.getCodigo()));
+		txtNome.setText(_cliente.getNome());
+		txtLimiteCompra.setText(String.valueOf(_cliente.getLimiteCompra()));
+		txtDiaFechamentoFatura.setText(String.valueOf(_cliente.getDiaFechamentoFatura()));
 	}
 
 	public void CreateFrame(JFrame parentFrame, ModoOperacao modo) {
-		setAlwaysOnTop(true);
 		setResizable(false);
 		setTitle("Cadastro Cliente");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -157,8 +159,8 @@ public class CadastroCliente extends JFrame {
 
 	private void salvar() {
 		String nome = txtNome.getText();
-		double limiteCompra = Double.parseDouble(txtLimiteCompra.getText());
-		int diaFechamentoFatura = Integer.parseInt(txtDiaFechamentoFatura.getText());
+		double limiteCompra = NumberUtils.parseDoubleOrDefault(txtLimiteCompra.getText(), 0);
+		int diaFechamentoFatura = NumberUtils.parseIntOrDefault(txtDiaFechamentoFatura.getText(), 0);
 
 		ClienteController clienteController = new ClienteController(new Cliente(nome, limiteCompra, diaFechamentoFatura));
 		clienteController.salvar();
@@ -168,8 +170,8 @@ public class CadastroCliente extends JFrame {
 
 	private void atualizar() {
 		_cliente.setNome(txtNome.getText());
-		_cliente.setLimiteCompra(Double.parseDouble(txtLimiteCompra.getText()));
-		_cliente.setDiaFechamentoFatura(Integer.parseInt(txtDiaFechamentoFatura.getText()));
+		_cliente.setLimiteCompra(NumberUtils.parseDoubleOrDefault(txtLimiteCompra.getText(), 0));
+		_cliente.setDiaFechamentoFatura(NumberUtils.parseIntOrDefault(txtDiaFechamentoFatura.getText(), 0));
 
 		ClienteController clienteController = new ClienteController(_cliente);
 		clienteController.atualizar();

@@ -222,7 +222,7 @@ public class VendaDAO {
     private Venda mapearVenda(Connection connection, ResultSet resultSet) throws SQLException {
         Venda venda = new Venda();
         venda.setCodigo(resultSet.getInt("codigo"));
-        venda.setCliente(new ClienteDAO().buscarPorId(resultSet.getInt("codigo_cliente")));
+        venda.setCliente(new ClienteDAO().buscarPorCodigo(resultSet.getInt("codigo_cliente")));
         venda.setDataVenda(resultSet.getDate("data_venda").toLocalDate());
         venda.setValorTotal(resultSet.getDouble("valor_total"));
         

@@ -10,6 +10,18 @@ public class VendaItem {
 	public VendaItem() {
 	}
 	
+	public VendaItem(Produto produto, double quantidade) {
+		this.produto = produto;
+		this.quantidade = quantidade;
+		this.valorTotal = this.produto.getPrecoUnitario() * this.quantidade;
+	}
+	
+	public VendaItem(Produto produto, double quantidade, double valorTotal) {
+		this.produto = produto;
+		this.quantidade = quantidade;
+		this.valorTotal = valorTotal;
+	}
+	
 	public Produto getProduto() {
 		return produto;
 	}

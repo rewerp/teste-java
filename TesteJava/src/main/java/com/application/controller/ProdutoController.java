@@ -19,9 +19,13 @@ public class ProdutoController {
 	private void validarProduto() {
 		if (_produto == null) {
 			throw new IllegalArgumentException("Produto inválido!");
-		} else if (_produto.getDescricao() == null || _produto.getDescricao().trim().isEmpty()) {
+		} 
+		
+		if (_produto.getDescricao() == null || _produto.getDescricao().trim().isEmpty()) {
 			throw new IllegalArgumentException("A descrição deve ser preenchida!");
-		} else if (_produto.getPrecoUnitario() <= 0) {
+		} 
+		
+		if (_produto.getPrecoUnitario() <= 0) {
 			throw new IllegalArgumentException("O preço unitário não pode ser ZERO ou negativo!");
 		}
 	}
@@ -48,6 +52,11 @@ public class ProdutoController {
 	public List<Produto> buscarTodos() {
 		ProdutoDAO produtoDAO = new ProdutoDAO();
 	    return produtoDAO.buscarTodos();
+	}
+	
+	public Produto buscarPorCodigo(int codigo) {
+		ProdutoDAO produtoDAO = new ProdutoDAO();
+	    return produtoDAO.buscarPorCodigo(codigo);
 	}
 	
 }
